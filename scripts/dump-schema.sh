@@ -58,7 +58,7 @@ detect_and_dump() {
   if ls "$ROOT"/**/entity/*.ts 2>/dev/null || ls "$ROOT"/src/**/entities/*.ts 2>/dev/null; then
     echo "📦 TypeORM detectado"
     find "$ROOT" -name "*.entity.ts" -o -name "*.entity.js" 2>/dev/null | head -20 | while read -r f; do
-      local rel="${f#$ROOT/}"
+      rel="${f#$ROOT/}"
       mkdir -p "$SCHEMA_DIR/$(dirname "$rel")"
       cp "$f" "$SCHEMA_DIR/$rel"
     done
