@@ -1,0 +1,44 @@
+{
+  "commands": {
+    "review": {
+      "description": "Code review completo — bugs, performance, seguridad, arquitectura, legibilidad",
+      "command": "review"
+    },
+    "security": {
+      "description": "Escaneo de seguridad — OWASP Top 10, API Top 10, JWT, CORS, SQLi",
+      "command": "security"
+    },
+    "privacy": {
+      "description": "Revisión de privacidad — Ley 21.719, GDPR, minimización, consentimiento",
+      "command": "privacy"
+    },
+    "qa": {
+      "description": "Pruebas estilo QA — plan de pruebas, unitarias, integración, Playwright",
+      "command": "qa"
+    },
+    "debug": {
+      "description": "Depuración guiada — análisis sistemático de bugs y errores",
+      "command": "debug"
+    },
+    "refactor": {
+      "description": "Refactorización guiada — mejorar código sin cambiar comportamiento",
+      "command": "refactor"
+    },
+    "fix-security": {
+      "description": "Aplica fixes de seguridad: CORS, helmet, rate limiting, transacciones, batch queries",
+      "command": "fix-security"
+    },
+    "fix-bugs": {
+      "description": "Aplica fixes de bugs: transacciones, state machine, as any, N+1",
+      "command": "fix-bugs"
+    },
+    "fix-both": {
+      "description": "Aplica seguridad + bugs en un solo comando",
+      "command": "fix-both"
+    },
+    "commit": {
+      "description": "Genera texto de commit con todos los cambios clasificados",
+      "command": "commit"
+    }
+  }
+}
