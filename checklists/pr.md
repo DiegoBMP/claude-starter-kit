@@ -2,8 +2,8 @@
 
 ## 🔍 Before submitting
 
-- [ ] Código compila sin errores (`pnpm build` o `tsc --noEmit` en los paquetes afectados)
-- [ ] Tests pasan (`pnpm test`)
+- [ ] Código compila sin errores
+- [ ] Tests pasan
 - [ ] Sin `console.log` / `debugger` / `TODO` sin issue
 - [ ] Sin secretos hardcodeados
 - [ ] Conventional commit message: `tipo(alcance): descripción`
@@ -17,9 +17,9 @@
 
 ## 🛡️ Seguridad
 
-- [ ] Toda entrada validada con Zod
+- [ ] Toda entrada validada (schema validation en runtime)
 - [ ] Sin SQL concatenado
-- [ ] JWT validado en endpoints protegidos
+- [ ] Auth validada en endpoints protegidos
 - [ ] Permisos verificados (no solo "autenticado")
 - [ ] Errores no filtran stack traces ni info interna
 - [ ] CORS configurado (si aplica)

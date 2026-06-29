@@ -4,10 +4,10 @@
 
 Ejecuta `/fix-security` y `/fix-bugs` en secuencia:
 
-1. Lee y aplica los cambios de seguridad: CORS, helmet, rate limiting, transacciones, batch queries, variables de entorno.
+1. Lee y aplica los cambios de seguridad: CORS, headers, rate limiting, transacciones, batch queries, variables de entorno.
 2. Lee y aplica los cambios de bugs: state machine, `as any`, batch restantes.
-3. Ejecuta `pnpm build` (o `tsc --noEmit`) para verificar que todo compila.
-4. Ejecuta `pnpm test` si existe para verificar que los tests siguen pasando.
+3. Ejecuta build (o type-check) para verificar que todo compila.
+4. Ejecuta tests si existen para verificar que los tests siguen pasando.
 5. Genera reporte consolidado.
 
 ## Salida

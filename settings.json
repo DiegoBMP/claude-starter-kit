@@ -39,6 +39,14 @@
     "commit": {
       "description": "Genera texto de commit con todos los cambios clasificados",
       "command": "commit"
+    },
+    "check-pr": {
+      "description": "Verifica el diff staged contra la checklist de PR automáticamente",
+      "command": "check-pr"
+    },
+    "check-release": {
+      "description": "Verifica el proyecto contra la checklist de release antes de deploy",
+      "command": "check-release"
     }
   }
 }

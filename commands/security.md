@@ -10,7 +10,7 @@ Antes de un deploy, al agregar endpoints nuevos, al modificar lógica de autenti
 2. **Revisión por capas:**
 
 ### 🔐 Autenticación & Autorización
-- [ ] ¿JWT firmado y validado en cada endpoint protegido?
+- [ ] ¿Auth validada en cada endpoint protegido?
 - [ ] ¿Tokens de acceso con expiración corta (≤ 15 min)?
 - [ ] ¿Refresh token implementado con rotación?
 - [ ] ¿Revocación de tokens posible?
@@ -18,7 +18,7 @@ Antes de un deploy, al agregar endpoints nuevos, al modificar lógica de autenti
 - [ ] ¿Rate limiting en login/register?
 
 ### 🗄️ Inyección & Validación
-- [ ] ¿Toda entrada validada con Zod?
+- [ ] ¿Toda entrada validada con schema validation en runtime?
 - [ ] ¿Sin SQL concatenado? (confirmar raw queries con placeholders)
 - [ ] ¿No hay eval(), Function(), exec() con input de usuario?
 - [ ] ¿Path traversal? (validar rutas de archivos si hay uploads)
@@ -31,7 +31,7 @@ Antes de un deploy, al agregar endpoints nuevos, al modificar lógica de autenti
 - [ ] ¿Cookies con Secure, HttpOnly, SameSite?
 
 ### 🔑 Secretos
-- [ ] ¿Sin secretos hardcodeados? (API keys, passwords, tokens, JWT secrets)
+- [ ] ¿Sin secretos hardcodeados? (API keys, passwords, tokens, secrets)
 - [ ] ¿Variables de entorno validadas al iniciar la app?
 - [ ] ¿.env en .gitignore?
 
@@ -41,8 +41,8 @@ Antes de un deploy, al agregar endpoints nuevos, al modificar lógica de autenti
 - [ ] ¿Errores no exponen stack traces ni info interna en producción?
 
 ### 📦 Dependencias
-- [ ] Ejecutar `npm audit` (o `pnpm audit`) y revisar vulnerabilidades críticas/altas.
-- [ ] Verificar versiones de dependencias clave (Express, Drizzle, Zod) sin CVEs conocidos.
+- [ ] Ejecutar auditoría de dependencias y revisar vulnerabilidades críticas/altas.
+- [ ] Verificar versiones de dependencias clave sin CVEs conocidos.
 
 ### 🧪 OWASP ASVS (chequeo rápido)
 - [ ] V2: Autenticación

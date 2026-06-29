@@ -16,12 +16,12 @@ Antes de un PR, después de implementar una feature, o cuando se necesite una re
 - ¿Hay off-by-one, null pointer, race condition?
 - ¿Manejo de errores cubre todos los caminos? (success, error, empty, loading)
 - ¿Casos borde cubiertos? (strings vacías, valores límite, IDs inexistentes)
-- ¿Validación de entrada con Zod cubre todos los campos?
+- ¿Validación de entrada (schema validation en runtime) cubre todos los campos?
 
 #### ⚡ Performance
-- ¿N+1 queries en loops? (Drizzle: usar `with` o eager loading)
+- ¿N+1 queries en loops? (usar eager loading, JOINs o batch queries)
 - ¿Faltan índices en columnas usadas en WHERE/ORDER BY/JOIN?
-- ¿Render innecesario en React? (memo, useMemo, useCallback solo cuando hay medición)
+- ¿Render innecesario en el frontend? (memoización solo cuando hay medición)
 - ¿Payloads grandes sin paginación?
 
 #### 🏗️ Arquitectura
@@ -32,7 +32,7 @@ Antes de un PR, después de implementar una feature, o cuando se necesite una re
 
 #### 🛡️ Seguridad
 - ¿SQL injection posible? (confirmar que no hay raw SQL concatenado)
-- ¿JWT validado en cada endpoint protegido?
+- ¿Auth validada en cada endpoint protegido?
 - ¿CORS configurado correctamente?
 - ¿Los errores no filtran información interna (stack traces, SQL, paths)?
 - ¿Rate limiting aplicado en endpoints sensibles?

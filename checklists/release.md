@@ -7,11 +7,11 @@
 - [ ] CHANGELOG / release notes actualizados
 - [ ] Tags git: `git tag vX.Y.Z && git push origin vX.Y.Z`
 - [ ] Tests pasan en CI
-- [ ] `pnpm audit` sin vulnerabilidades críticas/altas
+- [ ] Auditoría de dependencias sin vulnerabilidades críticas/altas
 
 ## 🗄️ Base de datos
 
-- [ ] Migraciones Drizzle listas y probadas
+- [ ] Migraciones listas y probadas
 - [ ] Migraciones forward y rollback verificados
 - [ ] Backup de BD realizado (si aplica)
 - [ ] Migraciones aplicadas en staging y verificadas

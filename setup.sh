@@ -83,7 +83,7 @@ cat > "$CLAUDE_FILE" << CLAUDEEOF
 
 ## Reglas de código
 
-- **TypeScript estricto** (si aplica). Sin \`any\`. Sin \`as\` casteos forzados.
+- **Tipado estricto** (si aplica). Sin \`any\`. Sin casteos forzados.
 - **DTOs obligatorios.** Toda comunicación externa usa DTOs. Nunca devolver entidades directamente.
 - **Validación de entrada.** Toda entrada de usuario se valida. No confiar en tipos estáticos como única defensa.
 - **Separación de capas.** Controllers → Services → Repositories. Los controllers no acceden a la BD.
@@ -95,8 +95,8 @@ cat > "$CLAUDE_FILE" << CLAUDEEOF
 
 - **Nunca hardcodear secretos.** Todo en variables de entorno o gestor de secretos.
 - **Nunca registrar datos personales en logs.**
-- **Hash de contraseñas:** Algoritmo fuerte (Argon2id, bcrypt). Nunca MD5, SHA1.
-- **JWT:** Expiración corta + refresh rotativo. Claims mínimos.
+- **Hash de contraseñas:** Algoritmo fuerte (bcrypt, Argon2id). Nunca MD5, SHA1.
+- **Tokens de acceso:** Expiración corta + refresh rotativo. Claims mínimos.
 - **CORS:** Orígenes explícitos. Sin wildcard en producción.
 - **HTTPS obligatorio en producción.**
 - **OWASP Top 10 + API Top 10 como guía de revisión.**
@@ -129,7 +129,7 @@ Antes de dar una tarea por terminada:
 
 - **Context7:** Consultar antes de usar APIs/librerías que no conozcas bien.
 - **Codebase Memory:** Usar para entender arquitectura antes de refactorizar.
-- **Playwright:** Ejecutar tras cambios en UI o flujos críticos.
+- **E2E:** Ejecutar tests end-to-end tras cambios en UI o flujos críticos.
 - **GitHub:** PRs, issues, gestión del repositorio.
 CLAUDEEOF
 

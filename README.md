@@ -29,15 +29,15 @@ bash .claude/setup.sh
 │   ├── review.md       ← Code review completo
 │   ├── security.md     ← Escaneo OWASP Top 10 + API Top 10
 │   ├── privacy.md      ← Ley 21.719 + GDPR
-│   ├── qa.md           ← Pruebas estilo QA (unitarias, integración, Playwright)
+│   ├── qa.md           ← Pruebas estilo QA (unitarias, integración, E2E)
 │   ├── debug.md        ← Depuración guiada
 │   ├── refactor.md     ← Refactorización sin romper nada
 │   ├── fix-security.md ← 🔧 Aplica fixes de seguridad automáticos
 │   ├── fix-bugs.md     ← 🔧 Aplica fixes de bugs automáticos
-│   └── fix-both.md     ← 🔧 Aplica seguridad + bugs de una
-├── scripts/
-│   ├── sync-git.sh     ← Actualiza state.md con últimos commits y archivos modificados
-│   └── dump-schema.sh  ← Vuelca esquema de BD a schema/ (Prisma, Drizzle, Knex, SQL...)
+│   ├── fix-both.md     ← 🔧 Aplica seguridad + bugs de una
+│   ├── check-pr.md     ← ✅ Verifica diff contra checklist de PR
+│   ├── check-release.md← 🚀 Verifica proyecto contra checklist de release
+│   └── commit.md       ← Genera mensaje de commit Conventional Commits
 └── checklists/
     ├── pr.md         ← Checklist antes del merge
     ├── release.md    ← Checklist antes del deploy
@@ -52,12 +52,15 @@ bash .claude/setup.sh
 | `/review` | Code review completo: bugs, performance, arquitectura, seguridad |
 | `/security` | Escaneo de seguridad OWASP |
 | `/privacy` | Revisión Ley 21.719 + GDPR |
-| `/qa` | Plan de pruebas estilo QA + Playwright |
+| `/qa` | Plan de pruebas estilo QA + E2E |
 | `/debug` | Debug guiado paso a paso |
 | `/refactor` | Refactorización con red de seguridad |
 | `/fix-security` | 🔧 Aplica fixes de seguridad: CORS, helmet, rate limiting |
 | `/fix-bugs` | 🔧 Aplica fixes de bugs: transacciones, state machine, N+1 |
 | `/fix-both` | 🔧 Aplica seguridad + bugs en un solo comando |
+| `/check-pr` | ✅ Verifica el diff contra la checklist de PR automáticamente |
+| `/check-release` | 🚀 Verifica el proyecto contra la checklist de release antes de deploy |
+| `/commit` | Genera mensaje de commit Conventional Commits |
 
 ## ¿Cuándo usar cada comando?
 
@@ -75,6 +78,8 @@ bash .claude/setup.sh
 | El review encontró issues de seguridad | `/fix-security` |
 | El review encontró bugs | `/fix-bugs` |
 | Quieres arreglarlo todo de una | `/fix-both` |
+| Antes de commitear, verificar checklist | `/check-pr` |
+| Antes de deployar a producción | `/check-release` |
 
 ## Scripts de automatización
 
@@ -95,5 +100,4 @@ bash .claude/scripts/dump-schema.sh
 ## Requisitos
 
 - Claude Code instalado
-- Node.js (para proyectos JS/TS)
 - Los MCPs que uses (codebase-memory, context7, playwright, etc.)

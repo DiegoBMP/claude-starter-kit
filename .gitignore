@@ -1,0 +1,3 @@
+# Dogfooding — solo para usar los slash commands localmente.
+# El source real son los archivos en la raíz del repo.
+.claude/

@@ -16,15 +16,15 @@ Cuando hay un bug, error inesperado, o comportamiento incorrecto en la aplicaci�
 
 3. **Análisis sistemático:**
 
-### Si es error de compilación/TypeScript
-- [ ] Revisar tsconfig y tipos importados
+### Si es error de compilación/tipos
+- [ ] Revisar configuración de tipos y imports
 - [ ] Buscar `any` o casteos incorrectos
-- [ ] Verificar que los schemas Zod y tipos de TS estén sincronizados
+- [ ] Verificar que los schemas de validación y tipos estén sincronizados
 - [ ] Revisar imports cíclicos
 
 ### Si es error en API (server)
 - [ ] ¿Llega la request al endpoint? (log en controller)
-- [ ] ¿La validación Zod rechaza la entrada?
+- [ ] ¿La validación de entrada rechaza la solicitud?
 - [ ] ¿La query DB devuelve lo esperado?
 - [ ] ¿El error se captura y devuelve correctamente?
 - [ ] Revisar middlewares (auth, CORS, rate limiting)
@@ -32,14 +32,14 @@ Cuando hay un bug, error inesperado, o comportamiento incorrecto en la aplicaci�
 
 ### Si es error en UI (client)
 - [ ] ¿Error de red? (network tab)
-- [ ] ¿Error de React? (console errors, component stack)
-- [ ] ¿Estado incorrecto? (TanStack Query devtools)
+- [ ] ¿Error del framework? (console errors, component stack)
+- [ ] ¿Estado incorrecto? (devtools del framework)
 - [ ] ¿Renderizado condicional cubre todos los estados?
 - [ ] Probar con datos mínimos/vacíos
 
 ### Si es error en BD
 - [ ] ¿Migraciones aplicadas?
-- [ ] ¿Schema de Drizzle y BD real sincronizados?
+- [ ] ¿Schema del ORM y BD real sincronizados?
 - [ ] Revisar índices y constraints
 - [ ] ¿Transacciones manejadas correctamente?
 

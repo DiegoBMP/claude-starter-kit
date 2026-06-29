@@ -9,7 +9,7 @@ Después de implementar cambios, antes de un PR, cuando se necesita verificar qu
 - **NUNCA borrar, modificar ni truncar datos de la BD de desarrollo o producción.** Los tests deben usar una BD aislada con su propio `DATABASE_URL`. Las pruebas unitarias y de integración corren exclusivamente contra esa BD de test, que se limpia y se vuelve a poblar con seed mínimo en cada ejecución. La BD de desarrollo jamás se toca.
 - **Si un test requiere datos específicos**, se crean en el `beforeAll` del test y se limpian solos al finalizar la suite.
 - **NUNCA usar `DELETE FROM`, `TRUNCATE` o `DROP` sin confirmar primero qué BD está activa.** Revisar `DATABASE_URL` antes de cualquier operación destructiva.
-- **Playwright / E2E**: si se ejecutan contra desarrollo local, usar solo lectura o crear entidades de prueba que no interfieran con datos reales.
+- **E2E**: si se ejecutan contra desarrollo local, usar solo lectura o crear entidades de prueba que no interfieran con datos reales.
 
 ## Flujo
 
@@ -31,7 +31,7 @@ Para cada función con lógica no trivial:
 - [ ] Caso feliz
 - [ ] Caso error (entrada inválida, ID no existe, permisos insuficientes)
 - [ ] Casos borde (valores límite, arrays vacíos, null/undefined)
-- [ ] Validación Zod (entradas malformadas)
+- [ ] Schema validation (entradas malformadas)
 
 #### Integración (server)
 - [ ] Flujo completo request → controller → service → repository → DB → response
@@ -42,7 +42,7 @@ Para cada función con lógica no trivial:
 - [ ] Componente renderiza con datos
 - [ ] Componente renderiza vacío/loading/error
 - [ ] Estados de carga y error visibles
-- [ ] Navegación funciona (react-router)
+- [ ] Navegación funciona (router del framework)
 - [ ] Formularios: validación en cliente + servidor
 - [ ] Responsive (mobile first)
 

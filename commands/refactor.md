@@ -39,7 +39,7 @@ Cuando hay que mejorar código existente sin cambiar su comportamiento: reducir 
 - Si se refactoriza un módulo completo, alinearlo con el patrón dominante del proyecto:
   - Server: routes → controllers → services → repositories
   - Client: componentes por carpeta (componente, hook, test, styles)
-  - Shared: schemas Zod con tipos inferidos
+  - Shared: schemas de validación con tipos inferidos
 
 ## Salida
 

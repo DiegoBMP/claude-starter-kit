@@ -8,15 +8,15 @@
 - [ ] BOLA/BFLA verificado (API Top 10)
 
 ## A2: Cryptographic Failures
-- [ ] Contraseñas: Argon2id
+- [ ] Contraseñas: algoritmo fuerte (bcrypt, Argon2id). Nunca MD5, SHA1.
 - [ ] HTTPS obligatorio en producción
 - [ ] Datos sensibles cifrados en reposo (BD)
 - [ ] Sin algoritmos criptográficos débiles (MD5, SHA1, DES)
 
 ## A3: Injection
-- [ ] SQL: Drizzle query builder o raw queries parametrizadas. Sin concatenación.
+- [ ] SQL: ORM/query builder con placeholders o raw queries parametrizadas. Sin concatenación.
 - [ ] NoSQL: validación estricta de entrada
-- [ ] XSS: escape en salidas, CSP, React escapa por defecto
+- [ ] XSS: escape en salidas, CSP, el framework de frontend debería escapar por defecto
 - [ ] Command injection: sin exec/eval con input de usuario
 
 ## A4: Insecure Design
@@ -33,17 +33,17 @@
 
 ## A6: Vulnerable Components
 - [ ] Dependencias actualizadas
-- [ ] `pnpm audit` sin críticos/altos
+- [ ] Auditoría de dependencias sin vulnerabilidades críticas/altas
 - [ ] Sin librerías deprecadas o sin mantenimiento
 
 ## A7: Auth Failures
-- [ ] JWT expiración ≤ 15 min
+- [ ] Tokens de acceso con expiración corta (≤ 15 min)
 - [ ] Refresh token con rotación
 - [ ] Sin sesiones estáticas
 - [ ] MFA considerado para acciones sensibles
 
 ## A8: Data Integrity
-- [ ] JWT firmado y verificado
+- [ ] Tokens firmados y verificados en cada request
 - [ ] Sin deserialización insegura
 - [ ] Integrity checks en datos críticos
 
@@ -60,4 +60,4 @@
 - [ ] Sin exponer IDs autoincrementales (usar UUID)
 - [ ] Sin información excesiva en errores
 - [ ] Paginación con límites forzados
-- [ ] Schema validation en toda entrada (Zod)
+- [ ] Schema validation en toda entrada (validación de tipos en runtime)

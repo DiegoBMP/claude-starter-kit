@@ -10,7 +10,7 @@
 
 ## 📦 Request/Response
 
-- [ ] DTO de request con validación Zod
+- [ ] DTO de request con validación (schema validation en runtime)
 - [ ] DTO de response sin exponer campos internos
 - [ ] Paginación: `{ data: [], total, page, pageSize }`
 - [ ] Errores: `{ error: { code, message, details? } }`
