@@ -22,6 +22,9 @@ bash .claude/setup.sh
 ├── CLAUDE.md         ← Reglas del proyecto (editar después del setup)
 ├── settings.json     ← Comandos registrados: /review, /security, /privacy, /qa, /debug, /refactor
 ├── setup.sh          ← Script de configuración interactiva
+├── scripts/
+│   ├── sync-git.sh     ← Actualiza state.md con últimos commits y archivos modificados
+│   └── dump-schema.sh  ← Vuelca esquema de BD a schema/ (Prisma, Drizzle, Knex, SQL...)
 ├── commands/
 │   ├── review.md       ← Code review completo
 │   ├── security.md     ← Escaneo OWASP Top 10 + API Top 10
@@ -32,6 +35,9 @@ bash .claude/setup.sh
 │   ├── fix-security.md ← 🔧 Aplica fixes de seguridad automáticos
 │   ├── fix-bugs.md     ← 🔧 Aplica fixes de bugs automáticos
 │   └── fix-both.md     ← 🔧 Aplica seguridad + bugs de una
+├── scripts/
+│   ├── sync-git.sh     ← Actualiza state.md con últimos commits y archivos modificados
+│   └── dump-schema.sh  ← Vuelca esquema de BD a schema/ (Prisma, Drizzle, Knex, SQL...)
 └── checklists/
     ├── pr.md         ← Checklist antes del merge
     ├── release.md    ← Checklist antes del deploy
@@ -69,6 +75,22 @@ bash .claude/setup.sh
 | El review encontró issues de seguridad | `/fix-security` |
 | El review encontró bugs | `/fix-bugs` |
 | Quieres arreglarlo todo de una | `/fix-both` |
+
+## Scripts de automatización
+
+Antes de cada sesión con Claude Code, ejecutá desde la raíz del proyecto:
+
+```bash
+# Actualizar estado del repo (commits recientes, archivos modificados)
+bash .claude/scripts/sync-git.sh
+
+# Volcar esquema de BD para que Claude conozca las tablas y columnas
+bash .claude/scripts/dump-schema.sh
+```
+
+`sync-git.sh` escribe `.claude/state.md` — Claude lo lee al iniciar y sabe exactamente en qué estabas trabajando.
+
+`dump-schema.sh` auto-detecta Prisma, Drizzle, Knex, TypeORM o archivos `.sql` y los copia a `.claude/schema/`.
 
 ## Requisitos
 
