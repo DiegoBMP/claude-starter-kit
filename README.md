@@ -48,6 +48,41 @@ cp claude-starter-kit/scripts/*.sh mi-proyecto/.claude/scripts/
 | Ya tiene commands propios | Solo checklists + scripts |
 | Está muy maduro | Solo `scripts/sync-git.sh` y `checklists/security.md` |
 
+## Actualizar un proyecto que ya tiene el kit
+
+Si ya instalaste el kit en un proyecto y querés traer los cambios nuevos:
+
+```bash
+# 1. Traer lo último del starter kit
+git clone <url-del-kit> claude-starter-kit-temp
+
+# 2. Copiar los archivos que no personalizaste
+cp claude-starter-kit-temp/commands/*.md       mi-proyecto/.claude/commands/
+cp claude-starter-kit-temp/checklists/*.md     mi-proyecto/.claude/checklists/
+cp claude-starter-kit-temp/scripts/*.sh        mi-proyecto/.claude/scripts/
+
+# 3. Fusionar settings.json — agregar los comandos nuevos
+#    (no sobrescribir, solo sumar los bloques que no tengas)
+
+# 4. CLAUDE.md — solo si querés las reglas nuevas, fusionar manualmente
+
+# 5. Limpiar
+rm -rf claude-starter-kit-temp
+```
+
+**Qué sobrescribir y qué no:**
+
+| Archivo | ¿Sobrescribir? | Por qué |
+|---------|---------------|---------|
+| `commands/*.md` | ✅ Sí | Son genéricos, no los personalizaste |
+| `checklists/*.md` | ✅ Sí | Ídem |
+| `scripts/*.sh` | ✅ Sí | Ídem |
+| `settings.json` | 🔀 Fusionar | Solo agregar bloques de comandos nuevos |
+| `CLAUDE.md` | ❌ No | Tiene reglas específicas de tu proyecto |
+| `state.md` | ❌ No | Es generado automático, propio del proyecto |
+
+Si tu proyecto tiene commands o checklists propios, el `cp` no los va a pisar porque solo copia archivos con el mismo nombre. Los tuyos con nombres distintos se preservan.
+
 ## Contenido
 
 ```
@@ -118,19 +153,15 @@ cp claude-starter-kit/scripts/*.sh mi-proyecto/.claude/scripts/
 
 ## Scripts de automatización
 
-Antes de cada sesión con Claude Code, ejecutá desde la raíz del proyecto:
+`sync-git.sh` se ejecuta **automáticamente** al iniciar Claude Code (vía hook `SessionStart` en `settings.json`). Escribe `.claude/state.md` con los últimos commits y archivos modificados.
+
+`dump-schema.sh` se ejecuta manualmente cuando cambia el esquema de BD:
 
 ```bash
-# Actualizar estado del repo (commits recientes, archivos modificados)
-bash .claude/scripts/sync-git.sh
-
-# Volcar esquema de BD para que Claude conozca las tablas y columnas
 bash .claude/scripts/dump-schema.sh
 ```
 
-`sync-git.sh` escribe `.claude/state.md` — Claude lo lee al iniciar y sabe exactamente en qué estabas trabajando.
-
-`dump-schema.sh` auto-detecta Prisma, Drizzle, Knex, TypeORM o archivos `.sql` y los copia a `.claude/schema/`.
+Auto-detecta Prisma, Drizzle, Knex, TypeORM o archivos `.sql` y los copia a `.claude/schema/`.
 
 ## MCPs recomendados por stack
 

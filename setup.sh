@@ -71,6 +71,9 @@ echo "📝 Escribiendo CLAUDE.md..."
 cat > "$CLAUDE_FILE" << CLAUDEEOF
 # $PROJECT_NAME — Reglas del proyecto
 
+> **Al iniciar cada sesión**, leer `.claude/state.md` (estado del repo) y
+> `.claude/schema/` (esquema de BD) antes de cualquier otra acción.
+
 ## Stack
 
 - **Runtime:** $RUNTIME

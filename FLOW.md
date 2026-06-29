@@ -72,9 +72,11 @@
 
 ## Antes de cada sesión
 
+`sync-git.sh` se ejecuta **automáticamente** al iniciar Claude Code (hook `SessionStart` en `settings.json`).
+
 ```bash
-bash .claude/scripts/sync-git.sh     # Actualizar state.md (commits, archivos modificados)
-bash .claude/scripts/dump-schema.sh  # Volcar esquema de BD a schema/
+# Solo cuando cambió el esquema de BD:
+bash .claude/scripts/dump-schema.sh
 ```
 
 ## Skills recomendadas

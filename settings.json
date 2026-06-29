@@ -52,5 +52,12 @@
       "description": "Genera CHANGELOG.md desde conventional commits desde el último tag",
       "command": "changelog"
     }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "command": "bash .claude/scripts/sync-git.sh"
+      }
+    ]
   }
 }

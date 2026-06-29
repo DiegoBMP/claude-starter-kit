@@ -2,6 +2,10 @@
 # dump-schema.sh — Vuelca el esquema de BD a .claude/schema/
 # El usuario configura el comando de dump para su motor.
 # Ejecutar desde la raíz del proyecto: bash .claude/scripts/dump-schema.sh
+#
+# ⚠️  Este script solo vuelca ESTRUCTURA (DDL), nunca datos.
+#     No incluye INSERTs, credenciales ni información sensible.
+#     Si tu comando custom genera datos, usá flags como --schema-only.
 
 set -e
 
