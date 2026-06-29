@@ -127,6 +127,7 @@ Antes de dar una tarea por terminada:
 
 ## MCPs (si aplican)
 
+- **Al usar un MCP, anunciarlo brevemente:** "Usando <MCP> para <qué>".
 - **Context7:** Consultar antes de usar APIs/librerías que no conozcas bien.
 - **Codebase Memory:** Usar para entender arquitectura antes de refactorizar.
 - **E2E:** Ejecutar tests end-to-end tras cambios en UI o flujos críticos.

@@ -12,6 +12,7 @@
 | `/fix-bugs` | 🔧 Aplica fixes de bugs: transacciones, state machine, N+1 |
 | `/fix-both` | 🔧 Aplica seguridad + bugs en un solo comando |
 | `/commit` | Genera mensaje de commit Conventional Commits |
+| `/changelog` | Genera CHANGELOG.md desde commits desde el último tag |
 | `/check-pr` | ✅ Verifica el diff contra la checklist de PR automáticamente |
 | `/check-release` | 🚀 Verifica el proyecto contra la checklist de release |
 
@@ -32,5 +33,6 @@
 | El review encontró bugs | `/fix-bugs` |
 | Quieres arreglarlo todo de una | `/fix-both` |
 | Terminaste cambios y quieres commit | `/commit` |
+| Vas a hacer un release, generar changelog | `/changelog` |
 | Antes de commitear, verificar checklist | `/check-pr` |
 | Antes de deployar a producción | `/check-release` |

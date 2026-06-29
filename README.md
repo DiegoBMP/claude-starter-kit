@@ -2,18 +2,51 @@
 
 Kit de configuración profesional para Claude Code con commands de review, seguridad, privacidad, QA, debug y refactor.
 
-## Instalación en un proyecto nuevo
+## Instalación
+
+### En un proyecto nuevo
 
 ```bash
-# 1. Copiar la carpeta al proyecto
-cp -r .claude-starter-kit/ ruta/de/tu/proyecto/.claude/
+# 1. Clonar el starter kit
+git clone <url-del-kit> claude-starter-kit
 
-# 2. Pararte en la raíz del proyecto y ejecutar el setup
-cd ruta/de/tu/proyecto
+# 2. Copiar a tu proyecto como .claude/
+cp -r claude-starter-kit/ mi-proyecto/.claude/
+
+# 3. Ejecutar el setup interactivo
+cd mi-proyecto
 bash .claude/setup.sh
-
-# 3. Responder las preguntas y listo
 ```
+
+### En un proyecto ya iniciado
+
+Si ya tenés un proyecto con su propio `CLAUDE.md` y configuración, no querés pisar lo que ya existe. Lo recomendado es copiar solo las partes que necesitás:
+
+```bash
+# 1. Clonar el starter kit
+git clone <url-del-kit> claude-starter-kit
+
+# 2. Copiar commands, checklists y scripts (no pisan nada tuyo)
+cp claude-starter-kit/commands/*.md mi-proyecto/.claude/commands/
+cp claude-starter-kit/checklists/*.md mi-proyecto/.claude/checklists/
+cp claude-starter-kit/scripts/*.sh mi-proyecto/.claude/scripts/
+
+# 3. Fusionar settings.json sin perder tus comandos
+#    Manual: copiá los bloques de comandos nuevos del settings.json del kit
+#    a tu .claude/settings.json existente
+
+# 4. CLAUDE.md — solo agregá las secciones que te sirvan
+#    (seguridad, privacidad, MCPs) al final de tu CLAUDE.md actual
+```
+
+**Qué conviene copiar según el tamaño del proyecto:**
+
+| Si tu proyecto... | Copiá |
+|-------------------|-------|
+| No tiene `CLAUDE.md` | Todo, ejecutar `setup.sh` |
+| Tiene `CLAUDE.md` básico | Commands + checklists + scripts, fusionar settings |
+| Ya tiene commands propios | Solo checklists + scripts |
+| Está muy maduro | Solo `scripts/sync-git.sh` y `checklists/security.md` |
 
 ## Contenido
 
@@ -61,6 +94,7 @@ bash .claude/setup.sh
 | `/check-pr` | ✅ Verifica el diff contra la checklist de PR automáticamente |
 | `/check-release` | 🚀 Verifica el proyecto contra la checklist de release antes de deploy |
 | `/commit` | Genera mensaje de commit Conventional Commits |
+| `/changelog` | Genera CHANGELOG.md desde commits desde el último tag |
 
 ## ¿Cuándo usar cada comando?
 
@@ -80,6 +114,7 @@ bash .claude/setup.sh
 | Quieres arreglarlo todo de una | `/fix-both` |
 | Antes de commitear, verificar checklist | `/check-pr` |
 | Antes de deployar a producción | `/check-release` |
+| Generar changelog para release | `/changelog` |
 
 ## Scripts de automatización
 
@@ -97,7 +132,35 @@ bash .claude/scripts/dump-schema.sh
 
 `dump-schema.sh` auto-detecta Prisma, Drizzle, Knex, TypeORM o archivos `.sql` y los copia a `.claude/schema/`.
 
+## MCPs recomendados por stack
+
+| MCP | ¿Para qué? | Cuándo instalarlo |
+|-----|-----------|-------------------|
+| **codebase-memory** | Trazar código: call graph, arquitectura, dependencias | Siempre |
+| **context7** | Buscar docs de librerías sin salir del editor | Siempre |
+| **GitHub** | PRs, issues, CI/CD desde Claude Code | Siempre |
+| **Playwright** | Tests E2E en navegador real | Proyectos con UI (React, Vue, Svelte...) |
+| **Postgres** | Consultas directas a BD, explorar tablas | Proyectos con PostgreSQL |
+| **Brave Search** | Búsqueda web sin salir del editor | Cuando necesitás info actualizada |
+| **Docker** | Gestionar contenedores desde Claude Code | Proyectos con Docker |
+| **Firebase** | Firestore, Auth, Functions | Proyectos con Firebase |
+| **Supabase** | BD, Auth, Edge Functions | Proyectos con Supabase |
+| **Cloudflare** | Workers, KV, R2, D1 | Proyectos en Cloudflare |
+| **Vercel** | Deploy, preview URLs, logs | Proyectos hosteados en Vercel |
+
+## Skills recomendadas
+
+Estas skills complementan los commands del kit. Instalarlas con `/install-skill <nombre>`:
+
+| Skill | Complementa a | Por qué |
+|-------|--------------|---------|
+| **superpowers:brainstorming** | Antes de empezar una feature | Diseñar antes de codear |
+| **superpowers:systematic-debugging** | `/debug` | Depuración con método, no a ciegas |
+| **superpowers:test-driven-development** | `/qa` | Escribe tests antes del código |
+| **superpowers:verification-before-completion** | `/check-pr` | Verificar antes de decir "listo" |
+| **superpowers:finishing-a-development-branch** | `/check-release` | Decide cómo integrar la rama terminada |
+| **code-review** | `/review` | Review del diff con niveles de profundidad |
+
 ## Requisitos
 
 - Claude Code instalado
-- Los MCPs que uses (codebase-memory, context7, playwright, etc.)

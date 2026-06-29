@@ -47,6 +47,10 @@
     "check-release": {
       "description": "Verifica el proyecto contra la checklist de release antes de deploy",
       "command": "check-release"
+    },
+    "changelog": {
+      "description": "Genera CHANGELOG.md desde conventional commits desde el último tag",
+      "command": "changelog"
     }
   }
 }
