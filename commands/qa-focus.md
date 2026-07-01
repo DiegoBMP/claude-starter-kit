@@ -39,10 +39,22 @@ Para cada función de lógica en el camino del dato:
 - [ ] Validación: campos requeridos, formatos, límites
 - [ ] Responsive: mobile, tablet, desktop
 
-#### 🔄 Flujo completo E2E
-- [ ] Camino feliz de punta a punta
-- [ ] Camino triste: error en cada paso del flujo
+#### 🔄 Flujo completo E2E con Playwright MCP
+Usar las herramientas `mcp__playwright__browser_*` para ejecutar el flujo en vivo:
+
+**Setup:** `browser_navigate` a la URL base del proyecto.
+**Interacción:** `browser_click`, `browser_type`, `browser_select_option`, `browser_fill_form`.
+**Verificación:** `browser_snapshot` para confirmar elementos, `browser_take_screenshot` para evidencia.
+**Assertions:** `browser_evaluate` para validar estado (texto, clases CSS, data-testid, URL actual).
+**Consola/red:** `browser_console_messages` y `browser_network_requests` para detectar errores JS y llamadas fallidas.
+
+Flujos a cubrir:
+- [ ] Camino feliz de punta a punta (navegar, interactuar, verificar resultado)
+- [ ] Camino triste: error en cada paso del flujo (forzar validación, timeout, 500)
 - [ ] Recuperación: reintentar, volver atrás, cancelar
+- [ ] Screenshot por cada paso clave (guardar en `.playwright-mcp/`)
+
+Si el Playwright MCP no está disponible, caer en specs tradicionales de Playwright test framework (`.spec.ts`).
 
 ### 4. Generar reporte
 

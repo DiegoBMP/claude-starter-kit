@@ -46,13 +46,24 @@ Para cada función con lógica no trivial:
 - [ ] Formularios: validación en cliente + servidor
 - [ ] Responsive (mobile first)
 
-#### E2E con Playwright
-Si hay cambios en UI o flujos críticos, Playwright debe verificar:
-- [ ] Navegación y rutas
+#### E2E con Playwright MCP (ejecución automática)
+Si hay cambios en UI o flujos críticos, usar las herramientas `mcp__playwright__browser_*` para ejecutar tests E2E en vivo sin instalar dependencias:
+
+**Setup:** `browser_navigate` a la URL base del proyecto (localhost o deploy preview).
+**Interacción:** `browser_click`, `browser_type`, `browser_select_option`, `browser_fill_form`.
+**Verificación:** `browser_snapshot` para confirmar elementos renderizados, `browser_take_screenshot` para evidencia visual.
+**Assertions:** `browser_evaluate` para correr JS inline y validar estado (texto, clases CSS, atributos data-testid).
+
+Checklist de flujos a cubrir:
+- [ ] Navegación y rutas (`browser_click` en links, verificar URL con `browser_evaluate`)
 - [ ] Flujo completo (crear → listar → editar → eliminar)
-- [ ] Estados vacíos
-- [ ] Manejo de errores (404, 500)
+- [ ] Estados vacíos (navegar a lista sin datos)
+- [ ] Manejo de errores (navegar a ruta inexistente → 404, forzar 500)
 - [ ] Autenticación (login, logout, sesión expirada)
+- [ ] Formularios: validación cliente + servidor (`browser_type` + submit + verificar errores)
+- [ ] Screenshots al final de cada flujo (guardar en `.playwright-mcp/`)
+
+Si el Playwright MCP no está disponible (tools `mcp__playwright__*` ausentes), caer en el plan tradicional: generar specs de Playwright test framework (`.spec.ts`) para que el usuario las ejecute con `npx playwright test`.
 
 ### Reporte
 
