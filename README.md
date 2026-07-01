@@ -11,6 +11,7 @@ Kit de configuración profesional para Claude Code con commands de review, segur
 git clone <url-del-kit> claude-starter-kit
 
 # 2. Copiar a tu proyecto como .claude/
+rm -rf claude-starter-kit/.git       # evita nested repo
 cp -r claude-starter-kit/ mi-proyecto/.claude/
 
 # 3. Ejecutar el setup interactivo
@@ -37,6 +38,9 @@ cp claude-starter-kit/scripts/*.sh mi-proyecto/.claude/scripts/
 
 # 4. CLAUDE.md — solo agregá las secciones que te sirvan
 #    (seguridad, privacidad, MCPs) al final de tu CLAUDE.md actual
+
+# 5. Limpiar
+rm -rf claude-starter-kit
 ```
 
 **Qué conviene copiar según el tamaño del proyecto:**
@@ -60,14 +64,13 @@ git clone <url-del-kit> claude-starter-kit-temp
 cp claude-starter-kit-temp/commands/*.md       mi-proyecto/.claude/commands/
 cp claude-starter-kit-temp/checklists/*.md     mi-proyecto/.claude/checklists/
 cp claude-starter-kit-temp/scripts/*.sh        mi-proyecto/.claude/scripts/
+cp claude-starter-kit-temp/settings.json       mi-proyecto/.claude/settings.json.backup
+# Fusionar manualmente: solo agregar comandos nuevos del .backup a tu settings.json
 
-# 3. Fusionar settings.json — agregar los comandos nuevos
-#    (no sobrescribir, solo sumar los bloques que no tengas)
+# 3. CLAUDE.md — solo si querés las reglas nuevas, fusionar manualmente
 
-# 4. CLAUDE.md — solo si querés las reglas nuevas, fusionar manualmente
-
-# 5. Limpiar
-rm -rf claude-starter-kit-temp
+# 4. Limpiar
+rm -rf claude-starter-kit-temp mi-proyecto/.claude/settings.json.backup
 ```
 
 **Qué sobrescribir y qué no:**
@@ -105,7 +108,10 @@ Si tu proyecto tiene commands o checklists propios, el `cp` no los va a pisar po
 │   ├── fix-both.md     ← 🔧 Aplica seguridad + bugs de una
 │   ├── check-pr.md     ← ✅ Verifica diff contra checklist de PR
 │   ├── check-release.md← 🚀 Verifica proyecto contra checklist de release
-│   └── commit.md       ← Genera mensaje de commit Conventional Commits
+│   ├── commit.md       ← Genera mensaje de commit Conventional Commits
+│   ├── review-focus.md ← 🔍 Review profundo de un módulo/vista específico
+│   ├── qa-focus.md     ← 🧪 QA enfocado en un feature o flujo concreto
+│   └── security-focus.md← 🛡️ Auditoría de seguridad de un área específica
 └── checklists/
     ├── pr.md         ← Checklist antes del merge
     ├── release.md    ← Checklist antes del deploy
@@ -130,6 +136,9 @@ Si tu proyecto tiene commands o checklists propios, el `cp` no los va a pisar po
 | `/check-release` | 🚀 Verifica el proyecto contra la checklist de release antes de deploy |
 | `/commit` | Genera mensaje de commit Conventional Commits |
 | `/changelog` | Genera CHANGELOG.md desde commits desde el último tag |
+| `/review-focus` | 🔍 Review profundo de un módulo, vista o flujo específico |
+| `/qa-focus` | 🧪 QA enfocado en un feature o flujo concreto |
+| `/security-focus` | 🛡️ Auditoría de seguridad de un endpoint o área específica |
 
 ## ¿Cuándo usar cada comando?
 
@@ -150,6 +159,9 @@ Si tu proyecto tiene commands o checklists propios, el `cp` no los va a pisar po
 | Antes de commitear, verificar checklist | `/check-pr` |
 | Antes de deployar a producción | `/check-release` |
 | Generar changelog para release | `/changelog` |
+| Revisar un módulo o vista en detalle | `/review-focus` |
+| Probar un feature o flujo concreto | `/qa-focus` |
+| Auditar seguridad de un endpoint específico | `/security-focus` |
 
 ## Scripts de automatización
 
@@ -178,6 +190,16 @@ Auto-detecta Prisma, Drizzle, Knex, TypeORM o archivos `.sql` y los copia a `.cl
 | **Supabase** | BD, Auth, Edge Functions | Proyectos con Supabase |
 | **Cloudflare** | Workers, KV, R2, D1 | Proyectos en Cloudflare |
 | **Vercel** | Deploy, preview URLs, logs | Proyectos hosteados en Vercel |
+
+### Cómo funciona codebase-memory
+
+A pesar del nombre "memory", **no guarda conversaciones ni recuerda decisiones**. Es un grafo de tu código:
+
+1. **Indexar** — La primera vez en un proyecto, pedile a Claude: _"indexá este repositorio con codebase-memory"_. Escanea cada archivo con LSP, construye un grafo (funciones → llamadas → rutas → flujo de datos). El índice persiste en disco. No es automático.
+2. **Consultar** — En cualquier sesión Claude usa `search_graph`, `trace_path`, `get_code_snippet` para navegar tu código sin leer archivos a ciegas.
+3. **Actualizar** — Cuando el código cambia, `detect_changes` encuentra qué re-indexar. No hace falta indexar todo de nuevo.
+
+Los comandos `-focus` (`/review-focus`, `/qa-focus`, `/security-focus`) lo usan intensivo para trazar el subgrafo del módulo que estás revisando.
 
 ## Skills recomendadas
 

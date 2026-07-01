@@ -51,6 +51,22 @@
     "changelog": {
       "description": "Genera CHANGELOG.md desde conventional commits desde el último tag",
       "command": "changelog"
+    },
+    "review-focus": {
+      "description": "Review profundo de un módulo/vista/flujo específico (con codebase-memory)",
+      "command": "review-focus"
+    },
+    "qa-focus": {
+      "description": "QA enfocado en un feature o flujo concreto (con codebase-memory)",
+      "command": "qa-focus"
+    },
+    "security-focus": {
+      "description": "Auditoría de seguridad de un endpoint o área específica (con codebase-memory)",
+      "command": "security-focus"
+    },
+    "index": {
+      "description": "Indexar el proyecto con codebase-memory (una vez por proyecto)",
+      "command": "index"
     }
   },
   "hooks": {

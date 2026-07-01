@@ -48,7 +48,7 @@ Claude Starter Kit es un kit de configuración que se copia a la carpeta `.claud
 
 1. Crear `commands/<nombre>.md` con esta estructura:
 
-```markdown
+~~~markdown
 # /<nombre> — Descripción corta
 
 ## Cuándo usarlo
@@ -67,7 +67,7 @@ Claude Starter Kit es un kit de configuración que se copia a la carpeta `.claud
 
 ...
 ```
-```
+~~~
 
 2. Registrarlo en `settings.json`:
 

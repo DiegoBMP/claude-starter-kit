@@ -44,6 +44,8 @@
 
 ## Cuándo usar cada comando
 
+### Modo general (todo el proyecto)
+
 | Cuándo | Qué ejecutás |
 |--------|-------------|
 | Terminaste una feature | `/review` |
@@ -60,6 +62,38 @@
 | El review encontró issues de seguridad | `/fix-security` |
 | El review encontró bugs | `/fix-bugs` |
 | Querés arreglarlo todo de una | `/fix-both` |
+
+### Modo foco (un módulo, vista o flujo)
+
+Usá los comandos `-focus` cuando trabajás en algo concreto y querés profundidad, no amplitud. Claude usa codebase-memory para trazar el subgrafo del módulo antes de revisar.
+
+| Cuándo | Qué ejecutás |
+|--------|-------------|
+| Revisar una vista o servicio en detalle | `/review-focus` |
+| Probar un feature o flujo específico | `/qa-focus` |
+| Auditar la seguridad de un endpoint o área | `/security-focus` |
+
+## Flujo con foco (una vista o módulo)
+
+```
+                   "Necesito revisar la vista X"
+                          │
+                          ▼
+                   ┌─────────────┐
+                   │/review-focus│ ← Traza el módulo, revisa en profundidad
+                   └──────┬──────┘
+                          │
+                   ┌──────▼──────┐
+                   │/security-focus│ ← Si el módulo tiene endpoints/API
+                   └──────┬──────┘
+                          │
+                   ┌──────▼──────┐
+                   │ /qa-focus   │ ← Plan de pruebas del flujo concreto
+                   └──────┬──────┘
+                          │
+                          ▼
+                        /commit
+```
 
 ## Comandos de emergencia
 
