@@ -8,7 +8,7 @@ Kit de configuración profesional para Claude Code con commands de review, segur
 
 ```bash
 # 1. Clonar el starter kit
-git clone <url-del-kit> claude-starter-kit
+git clone https://github.com/diegobmp/claude-starter-kit.git claude-starter-kit
 
 # 2. Copiar a tu proyecto como .claude/
 rm -rf claude-starter-kit/.git       # evita nested repo
@@ -25,7 +25,7 @@ Si ya tenés un proyecto con su propio `CLAUDE.md` y configuración, no querés 
 
 ```bash
 # 1. Clonar el starter kit
-git clone <url-del-kit> claude-starter-kit
+git clone https://github.com/diegobmp/claude-starter-kit.git claude-starter-kit
 
 # 2. Copiar commands, checklists y scripts (no pisan nada tuyo)
 cp claude-starter-kit/commands/*.md mi-proyecto/.claude/commands/
@@ -54,26 +54,26 @@ rm -rf claude-starter-kit
 
 ## Actualizar un proyecto que ya tiene el kit
 
-Si ya instalaste el kit en un proyecto y querés traer los cambios nuevos:
+### Automático (recomendado)
+
+Desde la raíz de tu proyecto:
 
 ```bash
-# 1. Traer lo último del starter kit
-git clone <url-del-kit> claude-starter-kit-temp
-
-# 2. Copiar los archivos que no personalizaste
-cp claude-starter-kit-temp/commands/*.md       mi-proyecto/.claude/commands/
-cp claude-starter-kit-temp/checklists/*.md     mi-proyecto/.claude/checklists/
-cp claude-starter-kit-temp/scripts/*.sh        mi-proyecto/.claude/scripts/
-cp claude-starter-kit-temp/settings.json       mi-proyecto/.claude/settings.json.backup
-# Fusionar manualmente: solo agregar comandos nuevos del .backup a tu settings.json
-
-# 3. CLAUDE.md — solo si querés las reglas nuevas, fusionar manualmente
-
-# 4. Limpiar
-rm -rf claude-starter-kit-temp mi-proyecto/.claude/settings.json.backup
+bash .claude/scripts/update.sh https://github.com/diegobmp/claude-starter-kit/archive/main.tar.gz
 ```
 
-**Qué sobrescribir y qué no:**
+El script descarga la última versión, copia commands/checklists/scripts actualizados, detecta comandos nuevos que faltan en tu `settings.json` y **no toca tu `CLAUDE.md`**.
+
+### Manual (si no hay conexión o el script no aplica)
+
+```bash
+git clone https://github.com/diegobmp/claude-starter-kit.git claude-starter-kit-temp
+cp claude-starter-kit-temp/commands/*.md   .claude/commands/
+cp claude-starter-kit-temp/checklists/*.md .claude/checklists/
+cp claude-starter-kit-temp/scripts/*.sh    .claude/scripts/
+# Fusionar settings.json manualmente
+rm -rf claude-starter-kit-temp
+```
 
 | Archivo | ¿Sobrescribir? | Por qué |
 |---------|---------------|---------|
@@ -84,8 +84,6 @@ rm -rf claude-starter-kit-temp mi-proyecto/.claude/settings.json.backup
 | `CLAUDE.md` | ❌ No | Tiene reglas específicas de tu proyecto |
 | `state.md` | ❌ No | Es generado automático, propio del proyecto |
 
-Si tu proyecto tiene commands o checklists propios, el `cp` no los va a pisar porque solo copia archivos con el mismo nombre. Los tuyos con nombres distintos se preservan.
-
 ## Contenido
 
 ```
@@ -95,7 +93,8 @@ Si tu proyecto tiene commands o checklists propios, el `cp` no los va a pisar po
 ├── setup.sh          ← Script de configuración interactiva
 ├── scripts/
 │   ├── sync-git.sh     ← Actualiza state.md con últimos commits y archivos modificados
-│   └── dump-schema.sh  ← Vuelca esquema de BD a schema/ (Prisma, Drizzle, Knex, SQL...)
+│   ├── dump-schema.sh  ← Vuelca esquema de BD a schema/ (Prisma, Drizzle, Knex, SQL...)
+│   └── update.sh       ← Descarga y aplica la última versión del kit
 ├── commands/
 │   ├── review.md       ← Code review completo
 │   ├── security.md     ← Escaneo OWASP Top 10 + API Top 10
