@@ -107,15 +107,11 @@ for f in "$SRC_DIR/checklists/"*.md; do
 done
 echo "   ✓ checklists/ actualizados"
 
-# Scripts
+# Scripts (excepto update.sh — se copia al final para no pisarse a sí mismo)
 for f in "$SRC_DIR/scripts/"*.sh; do
   name=$(basename "$f")
-  if [ "$name" = "update.sh" ]; then
-    cp "$f" "$KIT_DIR/scripts/update.sh"
-    echo "   ↻ scripts/update.sh (auto-actualizado)"
-  else
-    cp "$f" "$KIT_DIR/scripts/$name"
-  fi
+  [ "$name" = "update.sh" ] && continue
+  cp "$f" "$KIT_DIR/scripts/$name"
 done
 echo "   ✓ scripts/ actualizados"
 
@@ -197,6 +193,12 @@ echo "   ⚠️  CLAUDE.md NO fue modificado (tiene reglas de tu proyecto)"
 if [ -f "$SRC_DIR/setup.sh" ]; then
   cp "$SRC_DIR/setup.sh" "$KIT_DIR/setup.sh"
   echo "   ✓ setup.sh actualizado"
+fi
+
+# Auto-actualización — al final, después de todo el trabajo
+if [ -f "$SRC_DIR/scripts/update.sh" ]; then
+  cp "$SRC_DIR/scripts/update.sh" "$KIT_DIR/scripts/update.sh"
+  echo "   ↻ scripts/update.sh (auto-actualizado)"
 fi
 
 echo ""
