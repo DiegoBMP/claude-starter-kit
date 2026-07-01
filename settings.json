@@ -67,6 +67,14 @@
     "index": {
       "description": "Indexar el proyecto con codebase-memory (una vez por proyecto)",
       "command": "index"
+    },
+    "improve": {
+      "description": "Propone mejoras: simplificación, performance, patrones, robustez",
+      "command": "improve"
+    },
+    "improve-focus": {
+      "description": "Mejoras enfocadas en un módulo/vista específico (con codebase-memory)",
+      "command": "improve-focus"
     }
   },
   "hooks": {

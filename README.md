@@ -2,6 +2,8 @@
 
 Kit de configuración profesional para Claude Code con commands de review, seguridad, privacidad, QA, debug y refactor.
 
+- [Instalación](#instalación) · [Actualizar](#actualizar-un-proyecto-que-ya-tiene-el-kit) · [Contenido](#contenido) · [Comandos](#comandos-disponibles) · [Scripts](#scripts-de-automatización) · [MCPs](#mcps-recomendados-por-stack) · [Skills](#skills-recomendadas)
+
 ## Instalación
 
 ### En un proyecto nuevo

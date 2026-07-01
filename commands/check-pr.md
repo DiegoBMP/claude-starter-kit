@@ -81,6 +81,10 @@ Antes de hacer commit o push, para verificar que los cambios pasan la checklist 
 ¿Querés que intente arreglar los ⚠️ automáticamente?
 ```
 
+## Persistencia
+
+Guardar el resultado en `.claude/reports/check-pr-<fecha>.md`.
+
 ## Reglas importantes
 
 - **No inventar.** Si un item no se puede verificar desde el diff, marcarlo como ⚠️ "requiere verificación manual".

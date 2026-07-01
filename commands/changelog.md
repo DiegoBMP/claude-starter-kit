@@ -54,6 +54,10 @@ Antes de un release, para generar `CHANGELOG.md` o las release notes a partir de
 - <descripción> (<hash>)
 ```
 
+## Persistencia
+
+Si el usuario confirma, escribir `CHANGELOG.md`. Además guardar una copia del resumen en `.claude/reports/changelog-<version>.md`.
+
 ## Reglas
 
 - Si el rango de commits está vacío, avisar: "No hay commits desde el último tag."

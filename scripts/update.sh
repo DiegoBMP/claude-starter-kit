@@ -3,8 +3,7 @@
 # Ejecutar desde la raíz del proyecto: bash .claude/scripts/update.sh
 #
 # Uso:
-#   bash .claude/scripts/update.sh
-#   bash .claude/scripts/update.sh https://github.com/usuario/claude-starter-kit/archive/main.tar.gz
+#   bash .claude/scripts/update.sh <url-del-tar.gz>
 
 set -e
 
@@ -16,37 +15,59 @@ KIT_URL="${1:-}"
 cleanup() { rm -rf "$TEMP_DIR"; }
 trap cleanup EXIT
 
+usage() {
+  echo "🔄 Claude Starter Kit — Actualizador"
+  echo ""
+  echo "Uso:"
+  echo "  bash .claude/scripts/update.sh <url-del-tar.gz>"
+  echo ""
+  echo "Ejemplo:"
+  echo "  bash .claude/scripts/update.sh https://github.com/diegobmp/claude-starter-kit/archive/main.tar.gz"
+  echo ""
+  echo "Alternativa manual:"
+  echo "  git clone <url-del-kit> /tmp/kit-temp"
+  echo "  cp /tmp/kit-temp/commands/*.md .claude/commands/"
+  echo "  cp /tmp/kit-temp/checklists/*.md  .claude/checklists/"
+  echo "  cp /tmp/kit-temp/scripts/*.sh     .claude/scripts/"
+  echo "  rm -rf /tmp/kit-temp"
+}
+
+if [ -z "$KIT_URL" ]; then
+  usage
+  exit 1
+fi
+
+# ── Descargar ────────────────────────────────────────────────────
+
 echo ""
 echo "🔄 Claude Starter Kit — Actualizador"
 echo ""
 
-# ── Descargar ────────────────────────────────────────────────────
-
-if [ -z "$KIT_URL" ]; then
-  echo "⚠️  No se especificó URL de descarga."
-  echo ""
-  echo "   Opciones:"
-  echo "   1. Pasar la URL como argumento:"
-  echo "      bash .claude/scripts/update.sh https://github.com/diegobmp/claude-starter-kit/archive/main.tar.gz"
-  echo ""
-  echo "   2. Clonar manualmente y copiar:"
-  echo "      git clone <url-del-kit> /tmp/kit-temp"
-  echo "      cp /tmp/kit-temp/commands/*.md .claude/commands/"
-  echo "      cp /tmp/kit-temp/checklists/*.md  .claude/checklists/"
-  echo "      cp /tmp/kit-temp/scripts/*.sh     .claude/scripts/"
-  echo "      rm -rf /tmp/kit-temp"
-  echo ""
-  exit 1
-fi
-
 echo "📥 Descargando $KIT_URL ..."
+HTTP_CODE=""
 if command -v curl &> /dev/null; then
-  curl -sL "$KIT_URL" -o "$TEMP_DIR/kit.tar.gz"
+  HTTP_CODE=$(curl -sL -o "$TEMP_DIR/kit.tar.gz" -w "%{http_code}" "$KIT_URL")
 elif command -v wget &> /dev/null; then
-  wget -q "$KIT_URL" -O "$TEMP_DIR/kit.tar.gz"
+  wget -q --server-response "$KIT_URL" -O "$TEMP_DIR/kit.tar.gz" 2>&1 | awk '/HTTP\// {print $2}' | tail -1 > "$TEMP_DIR/http_code.txt"
+  HTTP_CODE=$(cat "$TEMP_DIR/http_code.txt" 2>/dev/null || echo "000")
 else
   echo "❌ Necesitás curl o wget instalado."
   exit 1
+fi
+
+if [ "${HTTP_CODE:0:1}" != "2" ] && [ "${HTTP_CODE:0:1}" != "3" ]; then
+  echo "❌ Error HTTP $HTTP_CODE al descargar. ¿La URL es correcta?"
+  exit 1
+fi
+
+# Validar que sea un archivo comprimido real
+if ! file "$TEMP_DIR/kit.tar.gz" 2>/dev/null | grep -qE 'gzip|tar'; then
+  # file no siempre está disponible, fallback: chequear magic bytes gzip (1f 8b)
+  if ! head -c2 "$TEMP_DIR/kit.tar.gz" | grep -q $'\x1f\x8b'; then
+    echo "❌ El archivo descargado no es un .tar.gz válido."
+    echo "   ¿La URL apunta a un release .tar.gz del repo?"
+    exit 1
+  fi
 fi
 
 echo "📦 Extrayendo..."
@@ -104,7 +125,6 @@ echo ""
 echo "⚙️  Verificando settings.json..."
 
 if [ -f "$SRC_DIR/settings.json" ] && [ -f "$KIT_DIR/settings.json" ]; then
-  # Extraer nombres de comandos nuevos (simple, sin jq)
   grep '"command"' "$SRC_DIR/settings.json" | sed 's/.*"command": *"\(.*\)".*/\1/' | sort > "$TEMP_DIR/new_commands.txt"
   grep '"command"' "$KIT_DIR/settings.json" | sed 's/.*"command": *"\(.*\)".*/\1/' | sort > "$TEMP_DIR/old_commands.txt"
 
@@ -117,9 +137,51 @@ if [ -f "$SRC_DIR/settings.json" ] && [ -f "$KIT_DIR/settings.json" ]; then
     while IFS= read -r cmd; do
       echo "      /$cmd"
     done <<< "$MISSING"
-    echo ""
-    echo "   🔧 Agregalos manualmente copiando los bloques desde:"
-    echo "      $SRC_DIR/settings.json"
+
+    # Auto-merge con Python si está disponible
+    if command -v python3 &> /dev/null || command -v python &> /dev/null; then
+      PYTHON=$(command -v python3 || command -v python)
+      echo ""
+      echo "   🔧 Haciendo merge automático (Python)..."
+      cp "$KIT_DIR/settings.json" "$KIT_DIR/settings.json.bak"
+
+      SRC_SETTINGS="$SRC_DIR/settings.json" \
+      DST_SETTINGS="$KIT_DIR/settings.json" \
+      "$PYTHON" -c "
+import os, json
+src_path = os.environ['SRC_SETTINGS']
+dst_path = os.environ['DST_SETTINGS']
+
+with open(src_path) as f: src = json.load(f)
+with open(dst_path) as f: dst = json.load(f)
+
+added = 0
+for name, block in src.get('commands', {}).items():
+    if name not in dst.get('commands', {}):
+        dst['commands'][name] = block
+        added += 1
+        print(f'      + /{name}')
+
+# Hooks también
+if 'hooks' in src:
+    if 'hooks' not in dst:
+        dst['hooks'] = {}
+    for hook_name, hook_cmds in src['hooks'].items():
+        if hook_name not in dst['hooks']:
+            dst['hooks'][hook_name] = hook_cmds
+            print(f'      + hook: {hook_name}')
+
+with open(dst_path, 'w') as f:
+    json.dump(dst, f, indent=2, ensure_ascii=False)
+    f.write('\n')
+
+print(f'   ✅ {added} comandos agregados (backup en settings.json.bak)')
+"
+    else
+      echo ""
+      echo "   🔧 Agregalos manualmente copiando los bloques desde:"
+      echo "      $SRC_DIR/settings.json"
+    fi
     echo ""
   else
     echo "   ✓ settings.json ya tiene todos los comandos"

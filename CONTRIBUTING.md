@@ -112,8 +112,8 @@ Claude Starter Kit es un kit de configuración que se copia a la carpeta `.claud
 
 ## Dogfooding
 
-Para usar los slash commands mientras desarrollamos el kit, existe `.claude/` (ignorado por git). Al modificar archivos en la raíz, sincronizar con:
+Para usar los slash commands mientras desarrollamos el kit, existe `.claude/` (ignorado por git). Al modificar archivos en la raíz:
 
 ```bash
-cp settings.json .claude/ && cp commands/*.md .claude/commands/ && cp checklists/*.md .claude/checklists/ && cp scripts/*.sh .claude/scripts/
+bash scripts/sync-local.sh
 ```

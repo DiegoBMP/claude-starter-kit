@@ -88,6 +88,10 @@ Antes de hacer un deploy a producción, para verificar que todo está listo seg�
 ...
 ```
 
+## Persistencia
+
+Guardar el resultado en `.claude/reports/check-release-<fecha>.md`.
+
 ## Reglas importantes
 
 - Este comando **no ejecuta nada**, solo verifica. No hace deploy, no corre migraciones, no crea tags.
