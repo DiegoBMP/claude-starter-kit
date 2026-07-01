@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.0.1 (2026-07-01)
+
+### ✨ Nuevas funcionalidades
+- /qa y /qa-focus ejecutan E2E con Playwright MCP en vez de solo checklist (d39bc4d)
+
+### 🐛 Bugs corregidos
+- FLOW.md: orden corregido /check-pr → /commit, no al revés
+- update.sh no se pisa a sí mismo durante la ejecución (50dcaa4)
+
 ## v1.0.0 (2026-07-01)
 
 ### ✨ Nuevas funcionalidades

@@ -13,11 +13,11 @@
                    └──────┬──────┘
                           │
                    ┌──────▼──────┐
-                   │ /commit     │ ← Generar mensaje de commit
+                   │ /check-pr   │ ← Verificar diff contra checklist de PR
                    └──────┬──────┘
                           │
                    ┌──────▼──────┐
-                   │ /check-pr   │ ← Verificar diff contra checklist de PR
+                   │ /commit     │ ← Generar mensaje de commit
                    └──────┬──────┘
                           │
                           ▼
@@ -54,8 +54,8 @@
 | Querés asegurarte antes de mergear | `/qa` |
 | Encontraste un bug | `/debug` |
 | Vas a refactorizar | `/refactor` |
-| Antes de commitear | `/commit` |
-| Verificar diff antes de push | `/check-pr` |
+| Antes de commitear | `/check-pr` |
+| Generar mensaje de commit | `/commit` |
 | Antes de deploy | `/security` + `/qa` |
 | Checklist pre-deploy | `/check-release` |
 | Generar changelog para release | `/changelog` |
