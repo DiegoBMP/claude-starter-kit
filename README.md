@@ -62,6 +62,12 @@ Desde la raíz de tu proyecto:
 bash .claude/scripts/update.sh https://github.com/diegobmp/claude-starter-kit/archive/main.tar.gz
 ```
 
+**Primera vez (si update.sh no existe):**
+
+```bash
+curl -sL https://raw.githubusercontent.com/diegobmp/claude-starter-kit/main/scripts/update.sh -o .claude/scripts/update.sh && chmod +x .claude/scripts/update.sh && bash .claude/scripts/update.sh https://github.com/diegobmp/claude-starter-kit/archive/main.tar.gz
+```
+
 El script descarga la última versión, copia commands/checklists/scripts actualizados, detecta comandos nuevos que faltan en tu `settings.json` y **no toca tu `CLAUDE.md`**.
 
 ### Manual (si no hay conexión o el script no aplica)
