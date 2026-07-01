@@ -11,6 +11,7 @@
 | `/fix-security` | 🔧 Aplica fixes de seguridad: CORS, helmet, rate limiting |
 | `/fix-bugs` | 🔧 Aplica fixes de bugs: transacciones, state machine, N+1 |
 | `/fix-both` | 🔧 Aplica seguridad + bugs en un solo comando |
+| `/fix-test` | 🧪 Genera tests faltantes: detecta módulos sin cobertura y los crea |
 | `/commit` | Genera mensaje de commit Conventional Commits |
 | `/changelog` | Genera CHANGELOG.md desde commits desde el último tag |
 | `/check-pr` | ✅ Verifica el diff contra la checklist de PR automáticamente |
@@ -35,6 +36,7 @@
 | El review encontró issues de seguridad | `/fix-security` |
 | El review encontró bugs | `/fix-bugs` |
 | Quieres arreglarlo todo de una | `/fix-both` |
+| Faltan tests en módulos nuevos o existentes | `/fix-test` |
 | Terminaste cambios y quieres commit | `/commit` |
 | Vas a hacer un release, generar changelog | `/changelog` |
 | Antes de commitear, verificar checklist | `/check-pr` |

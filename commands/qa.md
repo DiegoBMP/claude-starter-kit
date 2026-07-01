@@ -65,6 +65,57 @@ Checklist de flujos a cubrir:
 
 Si el Playwright MCP no está disponible (tools `mcp__playwright__*` ausentes), caer en el plan tradicional: generar specs de Playwright test framework (`.spec.ts`) para que el usuario las ejecute con `npx playwright test`.
 
+### 📁 Carpeta de salida Playwright
+
+Todas las capturas, snapshots y logs de la sesión Playwright se guardan en una carpeta dedicada:
+
+```
+.playwright-mcp/
+└── qa-<slug>-<NN>/
+    ├── reporte.md          ← resumen de las pruebas ejecutadas
+    ├── screenshot-01.png   ← capturas tomadas durante la sesión
+    ├── screenshot-02.png
+    ├── snapshot-01.yml     ← snapshots de accesibilidad
+    └── console.log         ← logs de consola del navegador
+```
+
+**Convención de nombres:**
+- `<slug>`: descripción corta del feature en kebab-case. Ej: `login`, `crear-orden`, `export-csv`.
+- `<NN>`: número secuencial de dos dígitos (01, 02, 03…). Se incrementa automáticamente si la carpeta ya existe.
+
+**Al iniciar la sesión Playwright:**
+1. Determinar el slug a partir del feature bajo prueba.
+2. Buscar carpetas existentes con `ls .playwright-mcp/qa-<slug>-*` y calcular el siguiente `NN`.
+3. Crear la carpeta: `mkdir -p .playwright-mcp/qa-<slug>-<NN>`.
+4. Toda captura (`browser_take_screenshot` con `filename`) y snapshot (`browser_snapshot` con `filename`) debe usar rutas relativas dentro de esa carpeta.
+5. Al terminar, escribir `reporte.md` con el resumen de la ejecución (ver formato abajo).
+
+**Formato de `reporte.md`:**
+```markdown
+# 🧪 QA: <feature> — <fecha>
+
+## Flujo probado
+1. <paso 1> → 🟢 | 🔴
+2. <paso 2> → 🟢 | 🔴
+3. ...
+
+## Capturas
+| # | Archivo | Paso |
+|---|---------|------|
+| 1 | screenshot-01.png | <descripción> |
+| 2 | screenshot-02.png | <descripción> |
+
+## Resultado
+| Métrica | Valor |
+|---------|-------|
+| Pasos ejecutados | N |
+| Pasos OK | N |
+| Fallos | N |
+
+## Veredicto
+**🟢 Listo** | **🟡 Observaciones** | **🔴 Bloqueado**
+```
+
 ### Reporte
 
 ```
@@ -83,6 +134,9 @@ Si el Playwright MCP no está disponible (tools `mcp__playwright__*` ausentes), 
 
 ### 🐛 Bugs encontrados
 - [ ] <descripción> — severidad: 🔴 crítica | 🟡 alta | 🔵 media | ⚪ baja
+
+### 📁 Artefactos E2E
+`.playwright-mcp/qa-<slug>-<NN>/`
 
 ### ✅ Veredicto
 **🟢 Listo para PR** | **🟡 Con observaciones** | **🔴 No listo**

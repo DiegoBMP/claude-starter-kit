@@ -56,6 +56,57 @@ Flujos a cubrir:
 
 Si el Playwright MCP no está disponible, caer en specs tradicionales de Playwright test framework (`.spec.ts`).
 
+### 📁 Carpeta de salida Playwright
+
+Todas las capturas, snapshots y logs de la sesión Playwright se guardan en una carpeta dedicada:
+
+```
+.playwright-mcp/
+└── qa-<slug>-<NN>/
+    ├── reporte.md          ← resumen de las pruebas ejecutadas
+    ├── screenshot-01.png   ← capturas tomadas durante la sesión
+    ├── screenshot-02.png
+    ├── snapshot-01.yml     ← snapshots de accesibilidad
+    └── console.log         ← logs de consola del navegador
+```
+
+**Convención de nombres:**
+- `<slug>`: el mismo slug definido en el paso 1 del scope, en kebab-case.
+- `<NN>`: número secuencial de dos dígitos (01, 02, 03…). Se incrementa automáticamente si la carpeta ya existe.
+
+**Al iniciar la sesión Playwright:**
+1. Usar el mismo slug definido en el scope.
+2. Buscar carpetas existentes con `ls .playwright-mcp/qa-<slug>-*` y calcular el siguiente `NN`.
+3. Crear la carpeta: `mkdir -p .playwright-mcp/qa-<slug>-<NN>`.
+4. Toda captura (`browser_take_screenshot` con `filename`) y snapshot (`browser_snapshot` con `filename`) debe usar rutas relativas dentro de esa carpeta.
+5. Al terminar, escribir `reporte.md` con el resumen de la ejecución.
+
+**Formato de `reporte.md`:**
+```markdown
+# 🧪 QA Focus: <feature> — <fecha>
+
+## Flujo probado
+1. <paso 1> → 🟢 | 🔴
+2. <paso 2> → 🟢 | 🔴
+3. ...
+
+## Capturas
+| # | Archivo | Paso |
+|---|---------|------|
+| 1 | screenshot-01.png | <descripción> |
+| 2 | screenshot-02.png | <descripción> |
+
+## Resultado
+| Métrica | Valor |
+|---------|-------|
+| Pasos ejecutados | N |
+| Pasos OK | N |
+| Fallos | N |
+
+## Veredicto
+**🟢 Listo** | **🟡 Observaciones** | **🔴 Bloqueado**
+```
+
 ### 4. Generar reporte
 
 ```
@@ -96,6 +147,8 @@ Puntos de fallo identificados: <N>
 ## Persistencia
 
 Al terminar, guardar el plan en `.claude/reports/qa-focus-<slug>-<fecha>.md`.
+
+Los artefactos E2E (capturas, snapshots, reporte.md) se guardan en `.playwright-mcp/qa-<slug>-<NN>/`.
 
 ## Reglas
 
